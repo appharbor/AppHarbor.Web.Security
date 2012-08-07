@@ -66,13 +66,18 @@ a new `Identity` object and sets the `User` property of the current
 It does not support the cookieless authentication functionality that the
 built-in forms authentication provides.
 
+In order to provide revocable session functionality, you need to keep
+track of the GUID assigned to each `AuthenticationCookie` issued.  You can
+then modify `AuthenticationCookie.IsExpired` method to return `true` if
+the session GUID is revoked in the database.
+
 
 # Security #
 
 To protect the cookie from tampering, by default, we use Rijndael (AES)
 algorithm to encrypt the cookie data, and then sign the encrypted data with
 HMAC-SHA1.  This Encrypt-then-Sign scheme is recommended by well-known
-cryptographers Mihir Bellare and Chanathip Namprempre in their paper:
+cryptographers, Mihir Bellare and Chanathip Namprempre, in their paper
 [Authenticated Encryption: Relations among notions and analysis of the generic
 composition paradigm](http://charlotte.ucsd.edu/~mihir/papers/oem.pdf).  Given
 secure underlying encryption and signing algorithms, this scheme is deemed
