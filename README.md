@@ -53,3 +53,9 @@ and `SignOut` methods), you should use `CookieAuthentication` instead:
 
     CookieAuthentication.SetAuthCookie(userName, rememberMe);
     CookieAuthentication.SignOut();
+
+# Frequently Asked Questions #
+
+## Does it only work on AppHarbor? ##
+
+No, you can use it in any ASP.NET application.
