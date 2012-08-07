@@ -56,14 +56,13 @@ and `SignOut` methods), you should use `CookieAuthentication` instead:
     CookieAuthentication.SignOut();
 
 
-# How it Works #
+# How It Works #
 
 The underlying architecture is quite similar to the way the built-in forms
-authentication works: an HTTP module intercepts the `AuthenticateRequest`
-event of the application, and retrieves and validates the authentication
-cookie.  Based on the information in the cookie, the HTTP module creates
-a new `Identity` object and sets the `User` property of the current
-`HttpContext` appropriately.
+authentication works: [an HTTP module](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthenticationModule.cs) 
+intercepts [the `AuthenticateRequest` event](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthenticationModule.cs#L22) of the application, and retrieves and validates the authentication
+cookie.  Based on the information in the cookie, the HTTP module [creates
+a new `Identity` object](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthenticationModule.cs#L37) and [sets the `User` property of the current `HttpContext`](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthenticationModule.cs#L38) appropriately.
 
 It does not support the cookieless authentication functionality that the
 built-in forms authentication provides.
