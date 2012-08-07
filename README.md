@@ -85,8 +85,12 @@ secure underlying encryption and signing algorithms, this scheme is deemed
 secure and is not known to be vulnerable to [Padding Oracle Attacks, like the
 one ASP.NET v4.0 forms authentication sufferred from recently](http://netifera.com/research/poet/ieee-aspnetcrypto.pdf).
 
-You can change the default encryption and validation algorithms by modifying
-the appropriate properties in the [`ConfigFileAuthenticationConfiguration`
+You can change the default
+[encryption](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/ConfigFileAuthenticationConfiguration.cs#L45)
+and
+[validation](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/ConfigFileAuthenticationConfiguration.cs#L69)
+algorithms by modifying the appropriate properties in the
+[`ConfigFileAuthenticationConfiguration`
 class](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/ConfigFileAuthenticationConfiguration.cs). 
 
 
