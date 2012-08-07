@@ -42,6 +42,8 @@ that will automatically generate keys for you and prints out configuration keys
 that you can copy and paste directly.
 
 **It is not a good idea to use online services to generate encryption keys.**
+You should also avoid using the keys used to protect the cookie for other
+purposes.
 
 In code, you need to add a `using` directive:
 
