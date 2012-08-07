@@ -11,7 +11,7 @@ namespace KeyGenerator
 			{
 				rijndael.GenerateKey();
 				rijndael.GenerateIV();
-				using (var hmacsha1 = new HMACSHA1())
+				using (var hmacsha1 = new HMACSHA256())
 				{
 					hmacsha1.Initialize();
 					Console.WriteLine(template,

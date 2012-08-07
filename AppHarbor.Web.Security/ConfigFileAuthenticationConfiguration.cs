@@ -66,7 +66,7 @@ namespace AppHarbor.Web.Security
 		{
 			get
 			{
-				return "hmacsha1";
+				return "hmacsha256";
 			}
 		}
 

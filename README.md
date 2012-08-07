@@ -77,7 +77,7 @@ the session GUID is revoked in the database.
 
 To protect the cookie from tampering, by default, we use Rijndael (AES)
 algorithm to encrypt the cookie data, and then sign the encrypted data with
-HMAC-SHA1.  This Encrypt-then-Sign scheme is recommended by well-known
+HMAC-SHA256.  This Encrypt-then-Sign scheme is recommended by well-known
 cryptographers, Mihir Bellare and Chanathip Namprempre, in their paper
 [Authenticated Encryption: Relations among notions and analysis of the generic
 composition paradigm](http://charlotte.ucsd.edu/~mihir/papers/oem.pdf).  Given
