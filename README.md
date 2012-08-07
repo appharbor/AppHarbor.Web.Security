@@ -42,7 +42,7 @@ There is a console application provided in the repository, named `KeyGenerator`,
 that will automatically generate keys for you and prints out configuration keys
 that you can copy and paste directly.
 
-It is not a good idea to use online services to generate encryption keys.
+**It is not a good idea to use online services to generate encryption keys.**
 
 In code, you need to add a `using` directive:
 
