@@ -68,8 +68,8 @@ It does not support the cookieless authentication functionality that the
 built-in forms authentication provides.
 
 In order to provide revocable session functionality, you need to keep
-track of the GUID assigned to each `AuthenticationCookie` issued.  You can
-then modify `AuthenticationCookie.IsExpired` method to return `true` if
+track of the [GUID assigned to each `AuthenticationCookie` issued](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthenticator.cs#L22).  You can
+then modify the [`AuthenticationCookie.IsExpired` method](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/AuthenticationCookie.cs#L84) to return `true` if
 the session GUID is revoked in the database.
 
 
