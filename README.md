@@ -50,7 +50,7 @@ In code, you need to add a `using` directive:
     using AppHarbor.Web.Security;
 
 and instead of using `FormsAuthentication` class (and its `SetAuthCookie`
-and `SignOut` methods), you should use `CookieAuthentication` instead:
+and `SignOut` methods), you should use [`CookieAuthentication`](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthentication.cs):
 
     CookieAuthentication.SetAuthCookie(userName, rememberMe);
     CookieAuthentication.SignOut();
