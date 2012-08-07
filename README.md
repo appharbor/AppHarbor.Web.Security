@@ -37,7 +37,7 @@ deploying on IIS on AppHarbor.)  Also, make sure `mode="None"` attribute is set
 on your `<authentication>` tag (under `<system.web>`).
 
 You also need to add the encryption keys you want to use under `<appSettings>`.
-There is a console application provided in the repository, named `KeyGenerator`,
+There is a console application provided in the repository, named [`KeyGenerator`](https://github.com/appharbor/AppHarbor.Web.Security/tree/master/KeyGenerator),
 that will automatically generate keys for you and prints out configuration keys
 that you can copy and paste directly.
 
