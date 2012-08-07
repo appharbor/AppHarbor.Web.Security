@@ -82,8 +82,8 @@ cryptographers, Mihir Bellare and Chanathip Namprempre, in their paper
 [Authenticated Encryption: Relations among notions and analysis of the generic
 composition paradigm](http://charlotte.ucsd.edu/~mihir/papers/oem.pdf).  Given
 secure underlying encryption and signing algorithms, this scheme is deemed
-secure and is not known to be vulnerable to Padding Oracle Attacks, like the
-one ASP.NET v4.0 forms authentication sufferred from recently.
+secure and is not known to be vulnerable to [Padding Oracle Attacks, like the
+one ASP.NET v4.0 forms authentication sufferred from recently](http://netifera.com/research/poet/ieee-aspnetcrypto.pdf).
 
 You can change the default encryption and validation algorithms by modifying
 the appropriate properties in the [`ConfigFileAuthenticationConfiguration`
