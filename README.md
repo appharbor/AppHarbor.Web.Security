@@ -1,4 +1,3 @@
-&nbsp;
 # Introduction #
 
 ASP.NET has a built-in Forms Authentication system to issue and validate
@@ -53,6 +52,37 @@ and `SignOut` methods), you should use `CookieAuthentication` instead:
 
     CookieAuthentication.SetAuthCookie(userName, rememberMe);
     CookieAuthentication.SignOut();
+
+
+# How it Works #
+
+The underlying architecture is quite similar to the way the built-in forms
+authentication works: an HTTP module intercepts the `AuthenticateRequest`
+event of the application, and retrieves and validates the authentication
+cookie.  Based on the information in the cookie, the HTTP module creates
+a new `Identity` object and sets the `User` property of the current
+`HttpContext` appropriately.
+
+It does not support the cookieless authentication functionality that the
+built-in forms authentication provides.
+
+
+# Security #
+
+To protect the cookie from tampering, by default, we use Rijndael (AES)
+algorithm to encrypt the cookie data, and then sign the encrypted data with
+HMAC-SHA1.  This Encrypt-then-Sign scheme is recommended by well-known
+cryptographers Mihir Bellare and Chanathip Namprempre in their paper:
+[Authenticated Encryption: Relations among notions and analysis of the generic
+composition paradigm](http://charlotte.ucsd.edu/~mihir/papers/oem.pdf).  Given
+secure underlying encryption and signing algorithms, this scheme is deemed
+secure and is not known to be vulnerable to Padding Oracle Attacks, like the
+one ASP.NET v4.0 forms authentication sufferred from recently.
+
+You can change the default encryption and validation algorithms by modifying
+the appropriate properties in the [`ConfigFileAuthenticationConfiguration`
+class](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/ConfigFileAuthenticationConfiguration.cs). 
+
 
 # Frequently Asked Questions #
 
