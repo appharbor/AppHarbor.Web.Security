@@ -1,4 +1,4 @@
-# Sample Project #
+# Sample Project - Important, Read Carefully: #
 
 This sample is a modified version of the default ASP.NET MVC 3 sample web
 project that Visual Studio creates to show how to use `CookieAuthentication`
