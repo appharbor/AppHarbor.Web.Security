@@ -28,7 +28,6 @@ namespace AppHarbor.Web.Security
 				using (var cryptoOutput = new CryptoStream(output, _algorithm.CreateEncryptor(_secretKey, _initializationVector), CryptoStreamMode.Write))
 				{
 					cryptoOutput.Write(valueBytes, 0, valueBytes.Length);
-					cryptoOutput.Close();
 				}
 
 				return output.ToArray();
@@ -42,7 +41,6 @@ namespace AppHarbor.Web.Security
 				using (var cryptoOutput = new CryptoStream(output, _algorithm.CreateDecryptor(_secretKey, _initializationVector), CryptoStreamMode.Write))
 				{
 					cryptoOutput.Write(encryptedValue, 0, encryptedValue.Length);
-					cryptoOutput.Close();
 				}
 
 				return output.ToArray();
