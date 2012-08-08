@@ -85,6 +85,12 @@ secure underlying encryption and signing algorithms, this scheme is deemed
 secure and is not known to be vulnerable to [Padding Oracle Attacks, like the
 one ASP.NET v4.0 forms authentication sufferred from recently](http://netifera.com/research/poet/ieee-aspnetcrypto.pdf).
 
+The other advantage of this solution relative to the ASP.NET's built-in
+offering is that ASP.NET reuses the same set of keys that it uses for
+forms authentication in other places like ViewState encryption with
+varying levels of criticality.  Our solution lets you use a unique set
+of keys just for authentication.
+
 You can change the default
 [encryption](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/ConfigFileAuthenticationConfiguration.cs#L45)
 and
