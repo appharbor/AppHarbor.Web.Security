@@ -31,27 +31,33 @@ namespace AppHarbor.Web.Security
 
 		public override byte[] Sign(byte[] data)
 		{
-			byte[] signedMessage = new byte[data.Length + _algorithm.HashSize / 8];
+			var hashLength = _algorithm.HashSize / 8;
+			var signedMessageLength = data.Length + hashLength;
+			var signedMessage = new byte[signedMessageLength];
 			Buffer.BlockCopy(data, 0, signedMessage, 0, data.Length);
-			Buffer.BlockCopy(ComputeSignature(data), 0, signedMessage, data.Length, _algorithm.HashSize / 8);
+			Buffer.BlockCopy(ComputeSignature(data), 0, signedMessage, data.Length, hashLength);
 			return signedMessage;
 		}
 
 		public override byte[] StripSignature(byte[] signedMessage)
 		{
-			var data = new byte[signedMessage.Length - _algorithm.HashSize / 8];
+			var hashLength = _algorithm.HashSize / 8;
+			var dataLength = signedMessage.Length - hashLength;
+			var data = new byte[dataLength];
 			Buffer.BlockCopy(signedMessage, 0, data, 0, data.Length);
 			return data;
 		}
 
 		public override bool Validate(byte[] signedMessage)
 		{
-			return Validate(signedMessage, signedMessage.Length - _algorithm.HashSize / 8);
+			var hashLength = _algorithm.HashSize / 8;
+			var dataLength = signedMessage.Length - hashLength;
+			return Validate(signedMessage, dataLength);
 		}
 
 		private bool Validate(byte[] signedMessage, int dataLength)
 		{
-			byte[] validSignature = ComputeSignature(signedMessage, 0, dataLength);
+			var validSignature = ComputeSignature(signedMessage, 0, dataLength);
 			return validSignature.SequenceEqual(signedMessage.Skip(dataLength));
 		}
 	}
