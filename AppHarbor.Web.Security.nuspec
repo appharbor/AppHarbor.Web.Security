@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>AppHarbor.Web.Security</id>
+    <version>1.0.0</version>
+    <authors>AppHarbor Inc.</authors>
+    <owners>AppHarbor Inc.</owners>
+    <projectUrl>http://github.com/appharbor/AppHarbor.Web.Security</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>AppHarbor Web Security Library</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright 2012</copyright>
+    <tags>AppHarbor Web Security Library Forms Authentication</tags>
+  </metadata>
+</package>
