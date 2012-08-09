@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 class Program
 {
@@ -13,9 +14,9 @@ class Program
 			{
 				hmacsha256.Initialize();
 				Console.WriteLine(template,
-					Convert.ToBase64String(rijndael.Key), 
-					Convert.ToBase64String(rijndael.IV),
-					Convert.ToBase64String(hmacsha256.Key));
+					new SoapHexBinary(rijndael.Key), 
+					new SoapHexBinary(rijndael.IV),
+					new SoapHexBinary(hmacsha256.Key));
 			}
 		}
 		Console.ReadKey();

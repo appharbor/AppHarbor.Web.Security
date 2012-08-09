@@ -46,19 +46,19 @@ namespace AppHarbor.Web.Security
 			}
 		}
 
-		public string EncryptionKey
+		public byte[] EncryptionKey
 		{
 			get
 			{
-				return ConfigurationManager.AppSettings["cookieauthentication.encryptionkey"];
+				return ConfigurationManager.AppSettings["cookieauthentication.encryptionkey"].GetByteArrayFromHexString();
 			}
 		}
 
-		public string EncryptionIV
+		public byte[] EncryptionIV
 		{
 			get
 			{
-				return ConfigurationManager.AppSettings["cookieauthentication.encryptioniv"];
+				return ConfigurationManager.AppSettings["cookieauthentication.encryptioniv"].GetByteArrayFromHexString();
 			}
 		}
 
@@ -70,11 +70,11 @@ namespace AppHarbor.Web.Security
 			}
 		}
 
-		public string ValidationKey
+		public byte[] ValidationKey
 		{
 			get
 			{
-				return ConfigurationManager.AppSettings["cookieauthentication.validationkey"];
+				return ConfigurationManager.AppSettings["cookieauthentication.validationkey"].GetByteArrayFromHexString();
 			}
 		}
 

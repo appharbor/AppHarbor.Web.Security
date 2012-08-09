@@ -16,12 +16,17 @@ namespace AppHarbor.Web.Security
 
 		public static Validation Create(string key)
 		{
-			return Create(Convert.FromBase64String(key));
+			return Create(key.GetByteArrayFromHexString());
 		}
 
 		public static Validation Create(byte[] key)
 		{
 			return Create(KeyedHashAlgorithm.Create(), key);
+		}
+
+		public static Validation Create(string algorithm, byte[] key)
+		{
+			return Create(KeyedHashAlgorithm.Create(algorithm), key);
 		}
 
 		public static Validation Create(KeyedHashAlgorithm algorithm, byte[] key)
@@ -31,7 +36,7 @@ namespace AppHarbor.Web.Security
 
 		public static Validation Create(string algorithm, string key)
 		{
-			return Create(KeyedHashAlgorithm.Create(algorithm), Convert.FromBase64String(key));
+			return Create(KeyedHashAlgorithm.Create(algorithm), key.GetByteArrayFromHexString());
 		}
 		
 		public static Validation Create<T>(byte[] key) where T : KeyedHashAlgorithm, new()
@@ -41,7 +46,7 @@ namespace AppHarbor.Web.Security
 		
 		public static Validation Create<T>(string key) where T : KeyedHashAlgorithm, new()
 		{
-			return Create<T>(Convert.FromBase64String(key));
+			return Create<T>(key.GetByteArrayFromHexString());
 		}
 	}
 }

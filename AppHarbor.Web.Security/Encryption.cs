@@ -17,14 +17,19 @@ namespace AppHarbor.Web.Security
 			return new SymmetricEncryption(algorithm, secretKey, initializationVector);
 		}
 
+		public static Encryption Create(string algorithm, byte[] secretKey, byte[] initializationVector)
+		{
+			return Create(SymmetricAlgorithm.Create(algorithm), secretKey, initializationVector);
+		}
+
 		public static Encryption Create(string secretKey, string initializationVector)
 		{
-			return Create(SymmetricAlgorithm.Create(), Convert.FromBase64String(secretKey), Convert.FromBase64String(initializationVector));
+			return Create(SymmetricAlgorithm.Create(), secretKey.GetByteArrayFromHexString(), initializationVector.GetByteArrayFromHexString());
 		}
 
 		public static Encryption Create(string algorithm, string secretKey, string initializationVector)
 		{
-			return Create(SymmetricAlgorithm.Create(algorithm), Convert.FromBase64String(secretKey), Convert.FromBase64String(initializationVector));
+			return Create(SymmetricAlgorithm.Create(algorithm), secretKey.GetByteArrayFromHexString(), initializationVector.GetByteArrayFromHexString());
 		}
 
 		public static Encryption Create<T>(byte[] secretKey, byte[] initializationVector) where T : SymmetricAlgorithm, new()
@@ -34,7 +39,7 @@ namespace AppHarbor.Web.Security
 
 		public static Encryption Create<T>(string secretKey, string initializationVector) where T: SymmetricAlgorithm, new()
 		{
-			return Create<T>(Convert.FromBase64String(secretKey), Convert.FromBase64String(initializationVector));
+			return Create<T>(secretKey.GetByteArrayFromHexString(), initializationVector.GetByteArrayFromHexString());
 		}
 	}
 }

@@ -11,10 +11,10 @@ namespace AppHarbor.Web.Security
 		CookieProtection CookieProtection { get; }
 		string LoginUrl { get; }
 		string EncryptionAlgorithm { get; }
-		string EncryptionKey { get; }
-		string EncryptionIV { get; }
+		byte[] EncryptionKey { get; }
+		byte[] EncryptionIV { get; }
 		string ValidationAlgorithm { get; }
-		string ValidationKey { get; }
+		byte[] ValidationKey { get; }
 		bool RequireSSL { get; }
 	}
 }
