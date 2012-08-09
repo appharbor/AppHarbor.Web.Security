@@ -34,8 +34,7 @@ namespace AppHarbor.Web.Security
 						var authenticationCookie = AuthenticationCookie.Deserialize(data);
 						if (!authenticationCookie.IsExpired(_configuration.Timeout))
 						{
-							var identity = new CookieIdentity(authenticationCookie.Name);// CookieIdentity(authenticationCookie.Name, authenticationCookie.Tag);
-							context.User = new GenericPrincipal(identity, new string[0]);
+							context.User = authenticationCookie.GetPrincipal();
 
 							if (_configuration.SlidingExpiration && authenticationCookie.IsExpired(TimeSpan.FromTicks(_configuration.Timeout.Ticks / 2)))
 							{

@@ -17,9 +17,9 @@ namespace AppHarbor.Web.Security
 			_configuration = configuration;
 		}
 		
-		public void SetCookie(string username, bool persistent = false, byte[] tag = null)
+		public void SetCookie(string username, bool persistent = false, string[] roles = null, byte[] tag = null)
 		{
-			var cookie = new AuthenticationCookie(0, Guid.NewGuid(), persistent, username, tag);
+			var cookie = new AuthenticationCookie(0, Guid.NewGuid(), persistent, username, roles, tag);
 			using (var protector = new CookieProtector(_configuration))
 			{
 				var httpCookie = new HttpCookie(_configuration.CookieName, protector.Protect(cookie.Serialize()))

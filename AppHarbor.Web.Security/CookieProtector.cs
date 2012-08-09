@@ -46,7 +46,15 @@ namespace AppHarbor.Web.Security
 			data = null;
 			try 
 			{
-				var cookieData = Convert.FromBase64String(cookie);
+				var versionedCookieData = Convert.FromBase64String(cookie);
+				
+				if (versionedCookieData.Length == 0 || versionedCookieData[0] != 0)
+				{
+					return false;
+				}
+
+				var cookieData = new byte[versionedCookieData.Length - 1];
+				Buffer.BlockCopy(versionedCookieData, 1, cookieData, 0, cookieData.Length);
 
 				if (_validation != null)
 				{
@@ -91,7 +99,9 @@ namespace AppHarbor.Web.Security
 				data = _validation.Sign(data);
 			}
 
-			return Convert.ToBase64String(data);
+			var versionedData = new byte[data.Length + 1];
+			Buffer.BlockCopy(data, 0, versionedData, 1, data.Length);
+			return Convert.ToBase64String(versionedData);
 		}
 
 		public void Dispose()
