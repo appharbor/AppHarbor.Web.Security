@@ -7,17 +7,12 @@ class Program
 	static void Main(string[] args)
 	{
 		using (var rijndael = new RijndaelManaged())
+		using (var hmacsha256 = new HMACSHA256())
 		{
 			rijndael.GenerateKey();
 			rijndael.GenerateIV();
-			using (var hmacsha256 = new HMACSHA256())
-			{
-				hmacsha256.Initialize();
-				Console.WriteLine(template,
-					new SoapHexBinary(rijndael.Key), 
-					new SoapHexBinary(rijndael.IV),
-					new SoapHexBinary(hmacsha256.Key));
-			}
+			hmacsha256.Initialize();
+			Console.WriteLine(template,	new SoapHexBinary(rijndael.Key), new SoapHexBinary(rijndael.IV), new SoapHexBinary(hmacsha256.Key));
 		}
 		Console.ReadKey();
 	}
