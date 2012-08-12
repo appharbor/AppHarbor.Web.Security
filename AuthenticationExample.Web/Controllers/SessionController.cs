@@ -39,7 +39,7 @@ namespace AuthenticationExample.Web.Controllers
 
 			if (ModelState.IsValid)
 			{
-				if (!BCrypt.CheckPassword(sessionViewModel.Password, user.Password))
+				if (!BCrypt.Net.BCrypt.Verify(sessionViewModel.Password, user.Password))
 				{
 					ModelState.AddModelError("Password", "Wrong password");
 				}

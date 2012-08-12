@@ -61,8 +61,8 @@ namespace AuthenticationExample.Web.Controllers
 
 		private static string HashPassword(string value)
 		{
-			string salt = BCrypt.GenerateSalt();
-			return BCrypt.HashPassword(value, salt);
+			string salt = BCrypt.Net.BCrypt.GenerateSalt();
+			return BCrypt.Net.BCrypt.HashPassword(value, salt);
 		}
 	}
 }
