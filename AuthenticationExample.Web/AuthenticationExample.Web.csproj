@@ -77,7 +77,6 @@
     <Compile Include="ViewModels\UserInputModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="LICENSE.txt" />
     <Content Include="packages.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Session\New.cshtml" />
