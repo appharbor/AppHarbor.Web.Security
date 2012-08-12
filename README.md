@@ -59,17 +59,17 @@ and `SignOut` methods), you should use [`CookieAuthentication`](https://github.c
 # How It Works #
 
 The underlying architecture is quite similar to the way the built-in forms
-authentication works: [an HTTP module](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthenticationModule.cs) 
-intercepts [the `AuthenticateRequest` event](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthenticationModule.cs#L22) of the application, and retrieves and validates the authentication
-cookie.  Based on the information in the cookie, the HTTP module [creates
-a new `Identity` object](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthenticationModule.cs#L37) and [sets the `User` property of the current `HttpContext`](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthenticationModule.cs#L38) appropriately.
+authentication works: [an HTTP module](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthenticationModule.cs#L7) 
+intercepts [the `AuthenticateRequest` event](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthenticationModule.cs#L21) of the application, and retrieves and validates the authentication
+cookie.  Based on the information in the cookie, the HTTP module creates
+a new `Identity` object and [sets the `User` property of the current `HttpContext`](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthenticationModule.cs#L36) appropriately.
 
 It does not support the cookieless authentication functionality that the
 built-in forms authentication provides.
 
 In order to provide revocable session functionality, you need to keep
 track of the [GUID assigned to each `AuthenticationCookie` issued](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthenticator.cs#L22).  You can
-then modify the [`AuthenticationCookie.IsExpired` method](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/AuthenticationCookie.cs#L84) to return `true` if
+then modify the [`AuthenticationCookie.IsExpired` method](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/AuthenticationCookie.cs#L111) to return `true` if
 the session GUID is revoked in the database.
 
 
@@ -94,7 +94,7 @@ of keys just for authentication.
 You can change the default
 [encryption](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/ConfigFileAuthenticationConfiguration.cs#L45)
 and
-[validation](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/ConfigFileAuthenticationConfiguration.cs#L69)
+[validation](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/ConfigFileAuthenticationConfiguration.cs#L80)
 algorithms by modifying the appropriate properties in the
 [`ConfigFileAuthenticationConfiguration`
 class](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/ConfigFileAuthenticationConfiguration.cs). 
