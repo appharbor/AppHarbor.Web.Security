@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using AppHarbor.Web.Security;
-using AuthenticationExample.Web;
 using AuthenticationExample.Web.Model;
-using AuthenticationExample.Web.ViewModels;
 using AuthenticationExample.Web.PersistenceSupport;
+using AuthenticationExample.Web.ViewModels;
 
 namespace AuthenticationExample.Web.Controllers
 {

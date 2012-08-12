@@ -1,10 +1,9 @@
-﻿using System;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using AppHarbor.Web.Security;
-using AuthenticationExample.Web.PersistenceSupport;
 using AuthenticationExample.Web.Mvc;
+using AuthenticationExample.Web.PersistenceSupport;
 using StructureMap;
 
 namespace AuthenticationExample.Web
