@@ -46,11 +46,22 @@ namespace AppHarbor.Web.Security
 			}
 		}
 
+		private static string GetRequiredSetting(string name)
+		{
+			var setting = ConfigurationManager.AppSettings[name];
+			if (setting != null)
+			{
+				return setting;
+			}
+
+			throw new ConfigurationException(string.Format("Required setting '{0}' not found.", name));
+		}
+
 		public byte[] EncryptionKey
 		{
 			get
 			{
-				return ConfigurationManager.AppSettings["cookieauthentication.encryptionkey"].GetByteArrayFromHexString();
+				return GetRequiredSetting("cookieauthentication.encryptionkey").GetByteArrayFromHexString();
 			}
 		}
 
@@ -58,7 +69,7 @@ namespace AppHarbor.Web.Security
 		{
 			get
 			{
-				return ConfigurationManager.AppSettings["cookieauthentication.encryptioniv"].GetByteArrayFromHexString();
+				return GetRequiredSetting("cookieauthentication.encryptioniv").GetByteArrayFromHexString();
 			}
 		}
 
@@ -74,7 +85,7 @@ namespace AppHarbor.Web.Security
 		{
 			get
 			{
-				return ConfigurationManager.AppSettings["cookieauthentication.validationkey"].GetByteArrayFromHexString();
+				return GetRequiredSetting("cookieauthentication.validationkey").GetByteArrayFromHexString();
 			}
 		}
 
