@@ -1,0 +1,27 @@
+﻿@model AuthenticationExample.Web.ViewModels.UserInputModel
+
+@{
+	ViewBag.Title = "New user";
+}
+
+<h2>New user</h2>
+
+@using (Html.BeginForm("Create", "User")) {
+	<fieldset>
+		<p>
+			@Html.LabelFor(x => x.Username)
+			@Html.TextBoxFor(x => x.Username)
+			@Html.ValidationMessageFor(x => x.Username)
+		</p>
+
+		<p>
+			@Html.LabelFor(x => x.Password)
+			@Html.PasswordFor(x => x.Password)
+			@Html.ValidationMessageFor(x => x.Password)
+		</p>
+
+		<p>
+			<button type="submit">Sign up</button>
+		</p>
+	</fieldset>
+}

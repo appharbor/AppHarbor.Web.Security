@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+	<head>
+		<meta charset="utf-8">
+		<title>@(ViewBag.Title ?? "Title")</title>
+	</head>
+	<body>
+		<p>
+			@{
+				var user = ViewContext.HttpContext.User;
+				if (user != null && user.Identity != null && user.Identity.IsAuthenticated) {
+					@:logged in as @Html.ActionLink(user.Identity.Name, "Show", "User")
+					using (Html.BeginForm("Destroy", "Session")) {
+						<button type="submit">Sign out</button>
+					}
+				} else {
+					@Html.ActionLink("log in", "New", "Session", new { returnUrl = Request.Path }, null) @:/ @Html.ActionLink("sign up", "New", "User")
+				}
+			}
+		</p>
+		@RenderBody()
+	</body>
+</html>
