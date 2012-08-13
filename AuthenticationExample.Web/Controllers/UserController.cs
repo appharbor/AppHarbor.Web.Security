@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using AppHarbor.Web.Security;
 using AuthenticationExample.Web.Model;
@@ -56,7 +57,13 @@ namespace AuthenticationExample.Web.Controllers
 		[Authorize]
 		public ActionResult Show()
 		{
-			return View(User.Identity);
+			var user = _repository.GetAll<User>().SingleOrDefault(x => x.Username == User.Identity.Name);
+			if (user == null)
+			{
+				throw new HttpException(404, "Not found");
+			}
+
+			return View(user);
 		}
 
 		private static string HashPassword(string value)
