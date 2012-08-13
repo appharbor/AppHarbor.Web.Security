@@ -24,33 +24,16 @@ namespace AppHarbor.Web.Security
 			var cookie = context.Request.Cookies[_configuration.CookieName];
 			if (cookie != null)
 			{
+				var protector = new CookieProtector(_configuration);
 				try
 				{
-					using (var protector = new CookieProtector(_configuration))
+					byte[] data;
+					var cookieData = protector.Validate(cookie.Value, out data);
+					var authenticationCookie = AuthenticationCookie.Deserialize(data);
+					if (!authenticationCookie.IsExpired(_configuration.Timeout))
 					{
-						byte[] data;
-						var cookieData = protector.Validate(cookie.Value, out data);
-						var authenticationCookie = AuthenticationCookie.Deserialize(data);
-						if (!authenticationCookie.IsExpired(_configuration.Timeout))
-						{
-							context.User = authenticationCookie.GetPrincipal();
-
-							if (_configuration.SlidingExpiration && authenticationCookie.IsExpired(TimeSpan.FromTicks(_configuration.Timeout.Ticks / 2)))
-							{
-								authenticationCookie.Renew();
-								context.Response.Cookies.Remove(_configuration.CookieName);
-								var newCookie = new HttpCookie(_configuration.CookieName, protector.Protect(authenticationCookie.Serialize()))
-								{
-									HttpOnly = true,
-									Secure = _configuration.RequireSSL,
-								};
-								if (!authenticationCookie.Persistent)
-								{
-									newCookie.Expires = authenticationCookie.IssueDate + _configuration.Timeout;
-								}
-								context.Response.Cookies.Add(newCookie);
-							}
-						}
+						context.User = authenticationCookie.GetPrincipal();
+						RenewCookieIfExpiring(context, protector, authenticationCookie);
 					}
 				}
 				catch
@@ -58,11 +41,37 @@ namespace AppHarbor.Web.Security
 					// do not leak any information if an exception was thrown.
 					// simply don't set the context.User property.
 				}
+				finally
+				{
+					if (protector != null)
+					{
+						protector.Dispose();
+					}
+				}
 			}
 
 			if (IsLoginPage(context.Request))
 			{
 				context.SkipAuthorization = true;
+			}
+		}
+
+		private void RenewCookieIfExpiring(HttpContext context, CookieProtector protector, AuthenticationCookie authenticationCookie)
+		{
+			if (_configuration.SlidingExpiration && authenticationCookie.IsExpired(TimeSpan.FromTicks(_configuration.Timeout.Ticks / 2)))
+			{
+				authenticationCookie.Renew();
+				context.Response.Cookies.Remove(_configuration.CookieName);
+				var newCookie = new HttpCookie(_configuration.CookieName, protector.Protect(authenticationCookie.Serialize()))
+				{
+					HttpOnly = true,
+					Secure = _configuration.RequireSSL,
+				};
+				if (!authenticationCookie.Persistent)
+				{
+					newCookie.Expires = authenticationCookie.IssueDate + _configuration.Timeout;
+				}
+				context.Response.Cookies.Add(newCookie);
 			}
 		}
 
