@@ -63,7 +63,7 @@ The underlying architecture is quite similar to the way the built-in forms
 authentication works: [an HTTP module](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthenticationModule.cs#L7) 
 intercepts [the `AuthenticateRequest` event](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthenticationModule.cs#L21) of the application, and retrieves and validates the authentication
 cookie.  Based on the information in the cookie, the HTTP module creates
-a new `Identity` object and [sets the `User` property of the current `HttpContext`](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthenticationModule.cs#L36) appropriately.
+a new `Identity` object and [sets the `User` property of the current `HttpContext`](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/CookieAuthenticationModule.cs#L35) appropriately.
 
 It does not support the cookieless authentication functionality that the
 built-in forms authentication provides.
