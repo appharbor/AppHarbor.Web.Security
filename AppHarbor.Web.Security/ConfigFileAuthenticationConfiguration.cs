@@ -46,7 +46,7 @@ namespace AppHarbor.Web.Security
 				return setting;
 			}
 
-			throw new ConfigurationException(string.Format("Required setting '{0}' not found.", name));
+			throw new Exception(string.Format("Required setting '{0}' not found.", name));
 		}
 
 		public byte[] EncryptionKey
