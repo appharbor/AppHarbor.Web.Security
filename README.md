@@ -76,7 +76,7 @@ the session GUID is revoked in the database.
 
 # Security #
 
-To protect the cookie from tampering, by default, we use Rijndael (AES)
+To protect the cookie from tampering, we use Rijndael (AES)
 algorithm to encrypt the cookie data, and then sign the encrypted data with
 HMAC-SHA256.  This Encrypt-then-Sign scheme is recommended by well-known
 cryptographers, Mihir Bellare and Chanathip Namprempre, in their paper
