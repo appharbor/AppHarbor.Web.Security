@@ -58,21 +58,22 @@ namespace AppHarbor.Web.Security
 
 		private void RenewCookieIfExpiring(HttpContext context, CookieProtector protector, AuthenticationCookie authenticationCookie)
 		{
-			if (_configuration.SlidingExpiration && authenticationCookie.IsExpired(TimeSpan.FromTicks(_configuration.Timeout.Ticks / 2)))
+			if (!_configuration.SlidingExpiration || !authenticationCookie.IsExpired(TimeSpan.FromTicks(_configuration.Timeout.Ticks / 2)))
 			{
-				authenticationCookie.Renew();
-				context.Response.Cookies.Remove(_configuration.CookieName);
-				var newCookie = new HttpCookie(_configuration.CookieName, protector.Protect(authenticationCookie.Serialize()))
-				{
-					HttpOnly = true,
-					Secure = _configuration.RequireSSL,
-				};
-				if (!authenticationCookie.Persistent)
-				{
-					newCookie.Expires = authenticationCookie.IssueDate + _configuration.Timeout;
-				}
-				context.Response.Cookies.Add(newCookie);
+				return;
 			}
+			authenticationCookie.Renew();
+			context.Response.Cookies.Remove(_configuration.CookieName);
+			var newCookie = new HttpCookie(_configuration.CookieName, protector.Protect(authenticationCookie.Serialize()))
+			{
+				HttpOnly = true,
+				Secure = _configuration.RequireSSL,
+			};
+			if (!authenticationCookie.Persistent)
+			{
+				newCookie.Expires = authenticationCookie.IssueDate + _configuration.Timeout;
+			}
+			context.Response.Cookies.Add(newCookie);
 		}
 
 		private bool IsLoginPage(HttpRequest request)
