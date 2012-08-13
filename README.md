@@ -31,14 +31,14 @@ In `<system.webServer>` section, add the following:
     <add name="AppHarbor.Web.Security.CookieAuthenticationModule" 
          type="AppHarbor.Web.Security.CookieAuthenticationModule, AppHarbor.Web.Security" />
 
-in `<httpModules>` section under `<system.web>`.  You can add safely add both if
+in `<httpModules>` section under `<system.web>`.  You can safely add both if
 you want to.  It won't hurt. This is useful when you are testing in Cassini and
 deploying on IIS on AppHarbor.)  Also, make sure `mode="None"` attribute is set
 on your `<authentication>` tag (under `<system.web>`).
 
 You also need to add the encryption keys you want to use under `<appSettings>`.
 There is a console application provided in the repository, named [`KeyGenerator`](https://github.com/appharbor/AppHarbor.Web.Security/tree/master/KeyGenerator),
-that will automatically generate keys for you and prints out configuration keys
+that will automatically generate keys for you and print out configuration keys
 that you can copy and paste directly.
 
 **It is not a good idea to use online services to generate encryption keys.**
