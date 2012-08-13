@@ -8,7 +8,6 @@ namespace AppHarbor.Web.Security
 		string CookieName { get; }
 		bool SlidingExpiration { get; }
 		TimeSpan Timeout { get; }
-		CookieProtection CookieProtection { get; }
 		string LoginUrl { get; }
 		string EncryptionAlgorithm { get; }
 		byte[] EncryptionKey { get; }

@@ -22,14 +22,6 @@ namespace AppHarbor.Web.Security
 			}
 		}
 
-		public CookieProtection CookieProtection
-		{
-			get
-			{
-				return CookieProtection.All;
-			}
-		}
-
 		public string LoginUrl
 		{
 			get

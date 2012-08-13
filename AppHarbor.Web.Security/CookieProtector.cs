@@ -11,21 +11,8 @@ namespace AppHarbor.Web.Security
 
 		public CookieProtector(ICookieAuthenticationConfiguration configuration)
 		{
-			switch (configuration.CookieProtection)
-			{
-				case CookieProtection.None:
-					break;
-				case CookieProtection.Encryption:
-					_encryption = Encryption.Create(configuration.EncryptionAlgorithm, configuration.EncryptionKey, configuration.EncryptionIV);
-					break;
-				case CookieProtection.Validation:
-					_validation = Validation.Create(configuration.ValidationAlgorithm, configuration.ValidationKey);
-					break;
-				default:
-					_encryption = Encryption.Create(configuration.EncryptionAlgorithm, configuration.EncryptionKey, configuration.EncryptionIV);
-					_validation = Validation.Create(configuration.ValidationAlgorithm, configuration.ValidationKey);
-					break;
-			}
+			_encryption = Encryption.Create(configuration.EncryptionAlgorithm, configuration.EncryptionKey, configuration.EncryptionIV);
+			_validation = Validation.Create(configuration.ValidationAlgorithm, configuration.ValidationKey);
 		}
 
 		public bool Validate(string cookie, out string data)
@@ -56,22 +43,16 @@ namespace AppHarbor.Web.Security
 				var cookieData = new byte[versionedCookieData.Length - 1];
 				Buffer.BlockCopy(versionedCookieData, 1, cookieData, 0, cookieData.Length);
 
-				if (_validation != null)
+				if (_validation.Validate(cookieData))
 				{
-					if (_validation.Validate(cookieData))
-					{
-						cookieData = _validation.StripSignature(cookieData);
-					}
-					else
-					{
-						return false;
-					}
+					cookieData = _validation.StripSignature(cookieData);
+				}
+				else
+				{
+					return false;
 				}
 
-				if (_encryption != null)
-				{
-					cookieData = _encryption.Decrypt(cookieData);
-				}
+				cookieData = _encryption.Decrypt(cookieData);
 
 				data = cookieData;
 				return true;
@@ -89,15 +70,8 @@ namespace AppHarbor.Web.Security
 
 		public string Protect(byte[] data)
 		{
-			if (_encryption != null)
-			{
-				data = _encryption.Encrypt(data);
-			}
-
-			if (_validation != null)
-			{
-				data = _validation.Sign(data);
-			}
+			data = _encryption.Encrypt(data);
+			data = _validation.Sign(data);
 
 			var versionedData = new byte[data.Length + 1];
 			Buffer.BlockCopy(data, 0, versionedData, 1, data.Length);
@@ -106,15 +80,8 @@ namespace AppHarbor.Web.Security
 
 		public void Dispose()
 		{
-			if (_encryption != null)
-			{
-				_encryption.Dispose();
-			}
-
-			if (_validation != null)
-			{
-				_validation.Dispose();
-			}
+			_encryption.Dispose();
+			_validation.Dispose();
 		}
 	}
 }
