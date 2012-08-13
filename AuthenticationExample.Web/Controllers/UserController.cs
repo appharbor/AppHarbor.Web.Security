@@ -45,7 +45,7 @@ namespace AuthenticationExample.Web.Controllers
 
 				_repository.SaveOrUpdate(user);
 
-				_authenticator.SetCookie(user.Username, tag: user.Id.ToByteArray());
+				_authenticator.SetCookie(user.Username);
 
 				return RedirectToAction("Index", "Home");
 			}

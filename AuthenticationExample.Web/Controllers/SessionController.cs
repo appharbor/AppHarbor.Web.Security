@@ -47,7 +47,7 @@ namespace AuthenticationExample.Web.Controllers
 
 			if (ModelState.IsValid)
 			{
-				_authenticator.SetCookie(user.Username, tag: user.Id.ToByteArray());
+				_authenticator.SetCookie(user.Username);
 				if (!string.IsNullOrEmpty(sessionViewModel.ReturnUrl))
 				{
 					return Redirect(sessionViewModel.ReturnUrl);
