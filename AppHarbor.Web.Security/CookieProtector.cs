@@ -43,15 +43,12 @@ namespace AppHarbor.Web.Security
 				var cookieData = new byte[versionedCookieData.Length - 1];
 				Buffer.BlockCopy(versionedCookieData, 1, cookieData, 0, cookieData.Length);
 
-				if (_validation.Validate(cookieData))
-				{
-					cookieData = _validation.StripSignature(cookieData);
-				}
-				else
+				if (!_validation.Validate(cookieData))
 				{
 					return false;
 				}
 
+				cookieData = _validation.StripSignature(cookieData);
 				cookieData = _encryption.Decrypt(cookieData);
 
 				data = cookieData;
