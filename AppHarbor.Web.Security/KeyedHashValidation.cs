@@ -58,18 +58,18 @@ namespace AppHarbor.Web.Security
 		private bool Validate(byte[] signedMessage, int dataLength)
 		{
 			bool isValid = true;
-			if (signedMessage.Length == 0)
+			var validSignature = ComputeSignature(signedMessage, 0, dataLength);
+			if (signedMessage.Length != dataLength + validSignature.Length)
 			{
 				return false;
 			}
-			var validSignature = ComputeSignature(signedMessage, 0, dataLength);
 			for (int i = 0; i < validSignature.Length; i++)
 			{
 				if (i + dataLength >= signedMessage.Length)
 				{
 					isValid = false;
 				}
-				if (signedMessage[(i + dataLength) % signedMessage.Length] != validSignature[i])
+				if (signedMessage[i + dataLength] != validSignature[i])
 				{
 					isValid = false;
 				}
