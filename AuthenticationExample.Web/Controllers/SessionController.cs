@@ -51,10 +51,10 @@ namespace AuthenticationExample.Web.Controllers
 			{
 				_authenticator.SetCookie(user.Username);
 				var returnUrl = sessionViewModel.ReturnUrl;
-				if (!string.IsNullOrEmpty(returnUrl))
+				if (returnUrl != null)
 				{
-					var returnUri = new Uri(returnUrl);
-					if (!returnUri.IsAbsoluteUri || returnUri.Host == Request.Url.Host)
+					Uri returnUri;
+					if (Uri.TryCreate(returnUrl, UriKind.Relative, out returnUri))
 					{
 						return Redirect(sessionViewModel.ReturnUrl);
 					}
