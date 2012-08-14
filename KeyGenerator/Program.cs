@@ -10,9 +10,8 @@ class Program
 		using (var hmacsha256 = new HMACSHA256())
 		{
 			rijndael.GenerateKey();
-			rijndael.GenerateIV();
 			hmacsha256.Initialize();
-			Console.WriteLine(template,	new SoapHexBinary(rijndael.Key), new SoapHexBinary(rijndael.IV), new SoapHexBinary(hmacsha256.Key));
+			Console.WriteLine(template,	new SoapHexBinary(rijndael.Key), new SoapHexBinary(hmacsha256.Key));
 		}
 
 		Console.WriteLine("press any key to exit...");
@@ -20,6 +19,5 @@ class Program
 	}
 
 	const string template = @"<add key=""cookieauthentication.encryptionkey"" value=""{0}""/>
-<add key=""cookieauthentication.encryptioniv"" value=""{1}""/>
 <add key=""cookieauthentication.validationkey"" value=""{2}""/>";
 }

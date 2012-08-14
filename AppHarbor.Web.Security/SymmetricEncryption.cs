@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Security.Cryptography;
+using System;
 
 namespace AppHarbor.Web.Security
 {
@@ -7,13 +8,11 @@ namespace AppHarbor.Web.Security
 	{
 		private readonly SymmetricAlgorithm _algorithm;
 		private readonly byte[] _secretKey;
-		private readonly byte[] _initializationVector;
 
-		public SymmetricEncryption(SymmetricAlgorithm algorithm, byte[] secretKey, byte[] initializationVector)
+		public SymmetricEncryption(SymmetricAlgorithm algorithm, byte[] secretKey)
 		{
 			_algorithm = algorithm;
 			_secretKey = secretKey;
-			_initializationVector = initializationVector;
 		}
 
 		public override void Dispose()
@@ -21,11 +20,24 @@ namespace AppHarbor.Web.Security
 			_algorithm.Dispose();
 		}
 
-		public override byte[] Encrypt(byte[] valueBytes)
+		public override byte[] Encrypt(byte[] valueBytes, byte[] initializationVector = null)
 		{
+			bool generateRandomIV = initializationVector == null;
+			if (generateRandomIV)
+			{
+				initializationVector = new byte[_algorithm.BlockSize];
+				using (var rng = RandomNumberGenerator.Create())
+				{
+					rng.GetBytes(initializationVector);
+				}
+			}
 			using (var output = new MemoryStream())
 			{
-				using (var cryptoOutput = new CryptoStream(output, _algorithm.CreateEncryptor(_secretKey, _initializationVector), CryptoStreamMode.Write))
+				if (generateRandomIV)
+				{
+					output.Write(initializationVector, 0, initializationVector.Length);
+				}
+				using (var cryptoOutput = new CryptoStream(output, _algorithm.CreateEncryptor(_secretKey, initializationVector), CryptoStreamMode.Write))
 				{
 					cryptoOutput.Write(valueBytes, 0, valueBytes.Length);
 				}
@@ -34,13 +46,20 @@ namespace AppHarbor.Web.Security
 			}
 		}
 
-		public override byte[] Decrypt(byte[] encryptedValue)
+		public override byte[] Decrypt(byte[] encryptedValue, byte[] initializationVector = null)
 		{
+			int dataOffset = 0;
+			if (initializationVector == null)
+			{
+				initializationVector = new byte[_algorithm.BlockSize];
+				Buffer.BlockCopy(encryptedValue, 0, initializationVector, 0, initializationVector.Length);
+				dataOffset = initializationVector.Length;
+			}
 			using (var output = new MemoryStream())
 			{
-				using (var cryptoOutput = new CryptoStream(output, _algorithm.CreateDecryptor(_secretKey, _initializationVector), CryptoStreamMode.Write))
+				using (var cryptoOutput = new CryptoStream(output, _algorithm.CreateDecryptor(_secretKey, initializationVector), CryptoStreamMode.Write))
 				{
-					cryptoOutput.Write(encryptedValue, 0, encryptedValue.Length);
+					cryptoOutput.Write(encryptedValue, dataOffset, encryptedValue.Length - dataOffset);
 				}
 
 				return output.ToArray();
@@ -50,8 +69,8 @@ namespace AppHarbor.Web.Security
 
 	public sealed class SymmetricEncryption<T> : SymmetricEncryption where T : SymmetricAlgorithm, new()
 	{
-		public SymmetricEncryption(byte[] secretKey, byte[] initializationVector)
-			: base(new T(), secretKey, initializationVector)
+		public SymmetricEncryption(byte[] secretKey)
+			: base(new T(), secretKey)
 		{
 		}
 	}

@@ -11,7 +11,7 @@ namespace AppHarbor.Web.Security
 
 		public CookieProtector(ICookieAuthenticationConfiguration configuration)
 		{
-			_encryption = Encryption.Create(configuration.EncryptionAlgorithm, configuration.EncryptionKey, configuration.EncryptionIV);
+			_encryption = Encryption.Create(configuration.EncryptionAlgorithm, configuration.EncryptionKey);
 			_validation = Validation.Create(configuration.ValidationAlgorithm, configuration.ValidationKey);
 		}
 
