@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using AppHarbor.Web.Security;
 using AuthenticationExample.Web.Model;
@@ -48,9 +49,14 @@ namespace AuthenticationExample.Web.Controllers
 			if (ModelState.IsValid)
 			{
 				_authenticator.SetCookie(user.Username);
-				if (!string.IsNullOrEmpty(sessionViewModel.ReturnUrl))
+				var returnUrl = sessionViewModel.ReturnUrl;
+				if (!string.IsNullOrEmpty(returnUrl))
 				{
-					return Redirect(sessionViewModel.ReturnUrl);
+					var returnUri = new Uri(returnUrl);
+					if (!returnUri.IsAbsoluteUri || returnUri.Host == Request.Url.Host)
+					{
+						return Redirect(sessionViewModel.ReturnUrl);
+					}
 				}
 
 				return RedirectToAction("Index", "Home");
