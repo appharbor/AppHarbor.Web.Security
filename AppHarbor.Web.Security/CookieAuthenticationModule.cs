@@ -86,7 +86,7 @@ namespace AppHarbor.Web.Security
 					loginUrl = "~/" + loginUrl;
 				}
 
-				return string.Compare(request.PhysicalPath, request.MapPath(loginUrl), StringComparison.OrdinalIgnoreCase) == 0;
+				return string.Equals(request.PhysicalPath, request.MapPath(loginUrl), StringComparison.OrdinalIgnoreCase);
 			}
 			catch
 			{
