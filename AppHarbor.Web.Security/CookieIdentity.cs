@@ -9,10 +9,16 @@ namespace AppHarbor.Web.Security
 	[Serializable]
 	public class CookieIdentity : MarshalByRefObject, IIdentity
 	{
-		public CookieIdentity(string name, byte[] tag = null) 
+		private readonly AuthenticationCookie _cookie;
+
+		public CookieIdentity(AuthenticationCookie cookie)
 		{
-			Name = name;
-			Tag = tag;
+			if (cookie == null)
+			{
+				throw new ArgumentNullException("cookie");
+			}
+
+			_cookie = cookie;
 		}
 		
 		public bool IsAuthenticated
@@ -33,14 +39,10 @@ namespace AppHarbor.Web.Security
 
 		public string Name
 		{
-			get;
-			private set;
-		}
-
-		public byte[] Tag
-		{
-			get;
-			private set;
+			get
+			{
+				return _cookie.Name;
+			}
 		}
 	}
 }
