@@ -57,7 +57,7 @@ namespace AppHarbor.Web.Security
 
 		public IPrincipal GetPrincipal()
 		{
-			var identity = new CookieIdentity(_name, _tag);
+			var identity = new CookieIdentity(this);
 			return new GenericPrincipal(identity, _roles);
 		}
 
