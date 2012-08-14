@@ -12,6 +12,7 @@ namespace AuthenticationExample.Web.Controllers
 	{
 		private readonly IAuthenticator _authenticator;
 		private readonly IRepository _repository;
+		private const string errorMessage = "Invalid username or password";
 
 		public SessionController(IAuthenticator authenticator, IRepository repository)
 		{
@@ -34,7 +35,7 @@ namespace AuthenticationExample.Web.Controllers
 				user = _repository.GetAll<User>().SingleOrDefault(x => x.Username == sessionViewModel.Username);
 				if (user == null)
 				{
-					ModelState.AddModelError("Username", "User not found");
+					ModelState.AddModelError(string.Empty, errorMessage);
 				}
 			}
 
@@ -42,7 +43,7 @@ namespace AuthenticationExample.Web.Controllers
 			{
 				if (!BCrypt.Net.BCrypt.Verify(sessionViewModel.Password, user.Password))
 				{
-					ModelState.AddModelError("Password", "Wrong password");
+					ModelState.AddModelError(string.Empty, errorMessage);
 				}
 			}
 
