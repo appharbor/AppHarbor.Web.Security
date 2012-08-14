@@ -25,7 +25,7 @@ namespace AppHarbor.Web.Security
 			bool generateRandomIV = initializationVector == null;
 			if (generateRandomIV)
 			{
-				initializationVector = new byte[_algorithm.BlockSize];
+				initializationVector = new byte[_algorithm.BlockSize / 8];
 				using (var rng = RandomNumberGenerator.Create())
 				{
 					rng.GetBytes(initializationVector);
@@ -51,7 +51,7 @@ namespace AppHarbor.Web.Security
 			int dataOffset = 0;
 			if (initializationVector == null)
 			{
-				initializationVector = new byte[_algorithm.BlockSize];
+				initializationVector = new byte[_algorithm.BlockSize / 8];
 				Buffer.BlockCopy(encryptedValue, 0, initializationVector, 0, initializationVector.Length);
 				dataOffset = initializationVector.Length;
 			}
