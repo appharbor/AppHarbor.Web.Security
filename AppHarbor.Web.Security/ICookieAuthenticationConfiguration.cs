@@ -11,7 +11,6 @@ namespace AppHarbor.Web.Security
 		string LoginUrl { get; }
 		string EncryptionAlgorithm { get; }
 		byte[] EncryptionKey { get; }
-		byte[] EncryptionIV { get; }
 		string ValidationAlgorithm { get; }
 		byte[] ValidationKey { get; }
 		bool RequireSSL { get; }
