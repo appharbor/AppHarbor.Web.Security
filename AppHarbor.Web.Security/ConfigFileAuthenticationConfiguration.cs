@@ -57,14 +57,6 @@ namespace AppHarbor.Web.Security
 			}
 		}
 
-		public byte[] EncryptionIV
-		{
-			get
-			{
-				return GetRequiredSetting("cookieauthentication.encryptioniv").GetByteArrayFromHexString();
-			}
-		}
-
 		public string ValidationAlgorithm
 		{
 			get
