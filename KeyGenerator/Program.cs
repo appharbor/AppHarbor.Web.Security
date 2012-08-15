@@ -11,7 +11,7 @@ class Program
 		{
 			rijndael.GenerateKey();
 			hmacsha256.Initialize();
-			Console.WriteLine(template,	new SoapHexBinary(rijndael.Key), new SoapHexBinary(hmacsha256.Key));
+			Console.WriteLine(template, new SoapHexBinary(rijndael.Key), new SoapHexBinary(hmacsha256.Key));
 		}
 
 		Console.WriteLine("press any key to exit...");
