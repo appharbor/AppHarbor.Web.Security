@@ -93,9 +93,9 @@ varying levels of criticality.  Our solution lets you use a unique set
 of keys just for authentication.
 
 You can change the default
-[encryption](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/ConfigFileAuthenticationConfiguration.cs#L45)
+[encryption](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/ConfigFileAuthenticationConfiguration.cs#L37)
 and
-[validation](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/ConfigFileAuthenticationConfiguration.cs#L80)
+[validation](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/ConfigFileAuthenticationConfiguration.cs#L64)
 algorithms by modifying the appropriate properties in the
 [`ConfigFileAuthenticationConfiguration`
 class](https://github.com/appharbor/AppHarbor.Web.Security/blob/master/AppHarbor.Web.Security/ConfigFileAuthenticationConfiguration.cs). 
