@@ -19,5 +19,5 @@ class Program
 	}
 
 	const string template = @"<add key=""cookieauthentication.encryptionkey"" value=""{0}""/>
-<add key=""cookieauthentication.validationkey"" value=""{2}""/>";
+<add key=""cookieauthentication.validationkey"" value=""{1}""/>";
 }
