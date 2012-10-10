@@ -20,7 +20,7 @@ It's easy to use this authentication solution.  You simply need to add a
 reference to `AppHarbor.Web.Security` assembly (and bin-deploy it) and make
 these changes to your root `Web.config` file:
 
-In `<system.webServer>` section, add the following:
+In `<system.webServer>` section, add the following to the `<modules>` element:
 
     <add name="AppHarbor.Web.Security.CookieAuthenticationModule" 
          type="AppHarbor.Web.Security.CookieAuthenticationModule, AppHarbor.Web.Security"
