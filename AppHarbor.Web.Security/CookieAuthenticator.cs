@@ -29,7 +29,7 @@ namespace AppHarbor.Web.Security
 					HttpOnly = true,
 					Secure = _configuration.RequireSSL,
 				};
-				if (!persistent)
+				if (persistent)
 				{
 					httpCookie.Expires = cookie.IssueDate + _configuration.Timeout;
 				}

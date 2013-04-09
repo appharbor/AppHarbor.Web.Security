@@ -69,7 +69,7 @@ namespace AppHarbor.Web.Security
 				HttpOnly = true,
 				Secure = _configuration.RequireSSL,
 			};
-			if (!authenticationCookie.Persistent)
+			if (authenticationCookie.Persistent)
 			{
 				newCookie.Expires = authenticationCookie.IssueDate + _configuration.Timeout;
 			}
