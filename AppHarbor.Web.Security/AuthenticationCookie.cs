@@ -110,7 +110,7 @@ namespace AppHarbor.Web.Security
 
 		public bool IsExpired(TimeSpan validity)
 		{
-			return !Persistent && _issueDate.Add(validity) <= DateTime.UtcNow;
+			return _issueDate.Add(validity) <= DateTime.UtcNow;
 		}
 
 		public DateTime IssueDate
