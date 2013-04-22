@@ -29,6 +29,12 @@ namespace AppHarbor.Web.Security
 					HttpOnly = true,
 					Secure = _configuration.RequireSSL,
 				};
+
+                if (!string.IsNullOrEmpty(_configuration.Domain))
+                {
+                    httpCookie.Domain = _configuration.Domain;
+                }
+
 				if (persistent)
 				{
 					httpCookie.Expires = cookie.IssueDate + _configuration.Timeout;
