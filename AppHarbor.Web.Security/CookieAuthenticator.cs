@@ -52,5 +52,22 @@ namespace AppHarbor.Web.Security
 				Expires = DateTime.UtcNow.AddMonths(-100),
 			});
 		}
+
+	    public byte[] GetTagData()
+	    {
+            var cookie = _context.Request.Cookies[_configuration.CookieName];
+            if (cookie != null)
+            {
+                using(var protector = new CookieProtector(_configuration))
+                {
+                    byte[] data;
+                    protector.Validate(cookie.Value, out data);
+                    var authenticationCookie = AuthenticationCookie.Deserialize(data);
+                    return authenticationCookie.Tag;
+                }
+            }
+
+	        return null;
+	    }
 	}
 }
