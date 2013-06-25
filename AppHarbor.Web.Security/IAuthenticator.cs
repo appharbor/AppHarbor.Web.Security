@@ -5,5 +5,6 @@ namespace AppHarbor.Web.Security
 	{
 		void SetCookie(string username, bool persistent = false, string[] roles = null, byte[] tag = null);
 		void SignOut();
+	    byte[] GetTagData();
 	}
 }

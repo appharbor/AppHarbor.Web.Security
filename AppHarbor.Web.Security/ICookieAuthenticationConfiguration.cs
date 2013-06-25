@@ -14,5 +14,6 @@ namespace AppHarbor.Web.Security
 		string ValidationAlgorithm { get; }
 		byte[] ValidationKey { get; }
 		bool RequireSSL { get; }
+	    string Domain { get; }
 	}
 }

@@ -88,5 +88,10 @@ namespace AppHarbor.Web.Security
 				return FormsAuthentication.RequireSSL;
 			}
 		}
+
+	    public string Domain
+	    {
+	        get { return ConfigurationManager.AppSettings["cookieauthentication.domain"]; }
+	    }
 	}
 }
