@@ -64,10 +64,6 @@ namespace AppHarbor.Web.Security
 			}
 			for (int i = 0; i < validSignature.Length; i++)
 			{
-				if (i + dataLength >= signedMessage.Length)
-				{
-					isValid = false;
-				}
 				if (signedMessage[i + dataLength] != validSignature[i])
 				{
 					isValid = false;
