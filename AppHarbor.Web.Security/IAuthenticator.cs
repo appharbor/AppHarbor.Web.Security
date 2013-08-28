@@ -1,9 +1,11 @@
 ﻿
 namespace AppHarbor.Web.Security
 {
+	using System.Security.Claims;
+
 	public interface IAuthenticator
 	{
-		void SetCookie(string username, bool persistent = false, string[] roles = null, byte[] tag = null);
+		void SetCookie(ClaimsIdentity identity, bool persistent = false);
 		void SignOut();
 	}
 }

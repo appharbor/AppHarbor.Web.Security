@@ -4,15 +4,16 @@ using System.Security.Principal;
 
 namespace AppHarbor.Web.Security
 {
+	using System.Runtime.Serialization.Formatters.Binary;
+	using System.Security.Claims;
+
 	public class AuthenticationCookie
 	{
 		private readonly short _cookieType;
 		private readonly Guid _id;
 		private readonly bool _persistent;
 		private DateTime _issueDate;
-		private readonly string _name;
-		private readonly byte[] _tag;
-		private readonly string[] _roles;
+		private readonly ClaimsIdentity _identity;
 
 		private AuthenticationCookie(byte[] data)
 		{
@@ -24,41 +25,27 @@ namespace AppHarbor.Web.Security
 					_id = new Guid(binaryReader.ReadBytes(16));
 					_persistent = binaryReader.ReadBoolean();
 					_issueDate = DateTime.FromBinary(binaryReader.ReadInt64());
-					_name = binaryReader.ReadString();
-					var rolesLength = binaryReader.ReadInt16();
-					_roles = new string[rolesLength];
-					for (int i = 0; i < _roles.Length; i++)
-					{
-						_roles[i] = binaryReader.ReadString();
-					}
-					var tagLength = binaryReader.ReadInt16();
-					if (tagLength == 0)
-					{
-						_tag = null;
-					}
-					else
-					{
-						_tag = binaryReader.ReadBytes(tagLength);
-					}
+					var identityLength = binaryReader.ReadInt32();
+					var identityBytes = binaryReader.ReadBytes(identityLength);
+					var stream = new MemoryStream(identityBytes);
+					var formatter = new BinaryFormatter();
+					_identity = (ClaimsIdentity)formatter.Deserialize(stream);
 				}
 			}
 		}
 
-		public AuthenticationCookie(short cookieType, Guid id, bool persistent, string name, string[] roles = null, byte[] tag = null)
+		public AuthenticationCookie(short cookieType, Guid id, bool persistent, ClaimsIdentity identity)
 		{
 			_cookieType = cookieType;
 			_id = id;
 			_persistent = persistent;
-			_name = name;
-			_roles = roles ?? new string[0];
-			_tag = tag;
+			_identity = identity;
 			_issueDate = DateTime.UtcNow;
 		}
 
 		public IPrincipal GetPrincipal()
 		{
-			var identity = new CookieIdentity(this);
-			return new GenericPrincipal(identity, _roles);
+			return new ClaimsPrincipal(_identity);
 		}
 
 		public byte[] Serialize()
@@ -71,28 +58,11 @@ namespace AppHarbor.Web.Security
 					binaryWriter.Write(_id.ToByteArray());
 					binaryWriter.Write(_persistent);
 					binaryWriter.Write(_issueDate.ToBinary());
-					binaryWriter.Write(_name);
-					if (_roles == null)
-					{
-						binaryWriter.Write((short)0);
-					}
-					else
-					{
-						binaryWriter.Write((short)_roles.Length);
-						foreach (var role in _roles)
-						{
-							binaryWriter.Write(role);
-						}
-					}
-					if (_tag == null)
-					{
-						binaryWriter.Write((short)0);
-					}
-					else
-					{
-						binaryWriter.Write((short)_tag.Length);
-						binaryWriter.Write(_tag);
-					}
+					var formatter = new BinaryFormatter();
+					var stream = new MemoryStream();
+					formatter.Serialize(stream, _identity);
+					binaryWriter.Write((int)stream.Length);
+					binaryWriter.Write(stream.ToArray());
 				}
 				return memoryStream.ToArray();
 			}
@@ -129,14 +99,6 @@ namespace AppHarbor.Web.Security
 			}
 		}
 
-		public string Name
-		{
-			get
-			{
-				return _name;
-			}
-		}
-
 		public short CookieType
 		{
 			get
@@ -153,19 +115,11 @@ namespace AppHarbor.Web.Security
 			}
 		}
 
-		public string[] Roles
+		public ClaimsIdentity Identity
 		{
 			get
 			{
-				return _roles;
-			}
-		}
-
-		public byte[] Tag
-		{
-			get
-			{
-				return _tag;
+				return _identity;
 			}
 		}
 	}

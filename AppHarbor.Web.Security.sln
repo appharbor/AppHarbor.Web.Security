@@ -1,17 +1,17 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppHarbor.Web.Security", "AppHarbor.Web.Security\AppHarbor.Web.Security.csproj", "{BA59E36D-677F-4F70-94DF-C75C8860F67B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationExample.KeyGenerator", "KeyGenerator\AuthenticationExample.KeyGenerator.csproj", "{F74A84FA-5EF8-4E62-B155-DB7D51CEC134}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationExample.Web", "AuthenticationExample.Web\AuthenticationExample.Web.csproj", "{FD393AA1-CC82-4B76-9AAB-C968F4A39C6D}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D2BCFD43-3FDD-4B23-B7CC-DBDBCAA33437}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppHarbor.Web.Security", "AppHarbor.Web.Security\AppHarbor.Web.Security.csproj", "{BA59E36D-677F-4F70-94DF-C75C8860F67B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationExample.KeyGenerator", "KeyGenerator\AuthenticationExample.KeyGenerator.csproj", "{F74A84FA-5EF8-4E62-B155-DB7D51CEC134}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationExample.Web", "AuthenticationExample.Web\AuthenticationExample.Web.csproj", "{FD393AA1-CC82-4B76-9AAB-C968F4A39C6D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
