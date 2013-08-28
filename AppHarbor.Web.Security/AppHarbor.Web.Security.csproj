@@ -41,10 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationCookie.cs" />
+    <Compile Include="AuthenticatorExtensions.cs" />
     <Compile Include="ConfigFileAuthenticationConfiguration.cs" />
     <Compile Include="CookieAuthenticationModule.cs" />
     <Compile Include="CookieAuthenticator.cs" />
-    <Compile Include="CookieIdentity.cs" />
     <Compile Include="CookieProtector.cs" />
     <Compile Include="Encryption.cs" />
     <Compile Include="IAuthenticator.cs" />

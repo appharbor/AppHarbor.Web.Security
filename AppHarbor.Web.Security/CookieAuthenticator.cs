@@ -3,6 +3,8 @@ using System.Web;
 
 namespace AppHarbor.Web.Security
 {
+	using System.Security.Claims;
+
 	public sealed class CookieAuthenticator : IAuthenticator
 	{
 		private readonly ICookieAuthenticationConfiguration _configuration;
@@ -19,9 +21,9 @@ namespace AppHarbor.Web.Security
 			_context = context;
 		}
 		
-		public void SetCookie(string username, bool persistent = false, string[] roles = null, byte[] tag = null)
+		public void SetCookie(ClaimsIdentity identity, bool persistent = false)
 		{
-			var cookie = new AuthenticationCookie(0, Guid.NewGuid(), persistent, username, roles, tag);
+			var cookie = new AuthenticationCookie(0, Guid.NewGuid(), persistent, identity);
 			using (var protector = new CookieProtector(_configuration))
 			{
 				var httpCookie = new HttpCookie(_configuration.CookieName, protector.Protect(cookie.Serialize()))
