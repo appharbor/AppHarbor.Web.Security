@@ -46,6 +46,7 @@
     <Compile Include="Encryption.cs" />
     <Compile Include="IAuthenticator.cs" />
     <Compile Include="ICookieAuthenticationConfiguration.cs" />
+    <Compile Include="ICookieValidator.cs" />
     <Compile Include="KeyedHashValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensions.cs" />
