@@ -7,6 +7,7 @@ namespace AppHarbor.Web.Security
 	public sealed class CookieAuthenticationModule : IHttpModule
 	{
 		private readonly ICookieAuthenticationConfiguration _configuration;
+        private readonly ICookieValidator  _validator;
 
 		public CookieAuthenticationModule()
 			: this(new ConfigFileAuthenticationConfiguration())
@@ -18,6 +19,13 @@ namespace AppHarbor.Web.Security
 			_configuration = configuration;
 		}
 
+        public CookieAuthenticationModule(ICookieAuthenticationConfiguration configuration,
+                                    ICookieValidator  validator)
+        {
+            _configuration = configuration;
+            _validator = validator;
+
+        }
 		private void OnAuthenticateRequest(object sender, EventArgs e)
 		{
 			var context = ((HttpApplication)sender).Context;
@@ -30,7 +38,13 @@ namespace AppHarbor.Web.Security
 					byte[] data;
 					var cookieData = protector.Validate(cookie.Value, out data);
 					var authenticationCookie = AuthenticationCookie.Deserialize(data);
-					if (!authenticationCookie.IsExpired(_configuration.Timeout))
+ 
+                    bool isCookieValid = true;
+                    if (_validator != null)
+                        isCookieValid = _validator.IsCookieValid(authenticationCookie);
+                    
+					if (isCookieValid && !authenticationCookie.IsExpired(_configuration.Timeout))
+
 					{
 						context.User = authenticationCookie.GetPrincipal();
 						RenewCookieIfExpiring(context, protector, authenticationCookie);
