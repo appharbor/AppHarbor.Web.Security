@@ -84,7 +84,7 @@ cryptographers, Mihir Bellare and Chanathip Namprempre, in their paper
 composition paradigm](http://charlotte.ucsd.edu/~mihir/papers/oem.pdf).  Given
 secure underlying encryption and signing algorithms, this scheme is deemed
 secure and is not known to be vulnerable to [Padding Oracle Attacks, like the
-one ASP.NET v4.0 forms authentication sufferred from recently](http://netifera.com/research/poet/ieee-aspnetcrypto.pdf).
+one ASP.NET v4.0 forms authentication suffered from recently](http://netifera.com/research/poet/ieee-aspnetcrypto.pdf).
 
 The other advantage of this solution relative to the ASP.NET's built-in
 offering is that ASP.NET reuses the same set of keys that it uses for
